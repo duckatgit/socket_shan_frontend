@@ -3,16 +3,16 @@ import { useEffect, useState } from 'react';
 import socket from '../utils/socket';
 
 const Home = () => {
-  const [randomIntegers, setRandomIntegers] = useState([]);
+  const [randomIntegers, setRandomIntegers] = useState(0);
 
   useEffect(() => {
-    socket.on('randomIntegers', (data) => {
+    socket.on('randomInteger', (data) => {
       console.log('Received random integers:', data);
       setRandomIntegers(data);
     });
 
     return () => {
-      socket.off('randomIntegers');
+      socket.off('randomInteger');
     };
   }, []);
 
@@ -20,9 +20,7 @@ const Home = () => {
     <div>
       <h1>Socket.IO Random Integers</h1>
       <ul>
-        {randomIntegers.map((num, index) => (
-          <li key={index}>{num}</li>
-        ))}
+        <li>{randomIntegers}</li>
       </ul>
     </div>
   );
